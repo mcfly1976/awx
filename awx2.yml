@@ -7,7 +7,7 @@
         - CriticalUpdates
         - SecurityUpdates
         - UpdateRollups
-        reboot: yes
+        reboot: no
         state: installed
       register: win_updates
     - name: reboot if needed
