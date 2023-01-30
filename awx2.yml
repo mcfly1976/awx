@@ -1,0 +1,21 @@
+---
+- hosts: windows
+  tasks:
+    - name: install windows updates
+      win_updates:
+        category_names:
+        - CriticalUpdates
+        - SecurityUpdates
+        - UpdateRollups
+        reboot: yes
+        state: installed
+      register: win_updates
+    - name: reboot if needed
+      win_reboot:
+        connect_timeout: 15
+        pre_reboot_delay: 60
+        reboot_timeout: 3600
+      when: win_updates.reboot_required
+    - name: print installed updates
+      debug:
+        msg: '{{ win_updates.updates }}'
